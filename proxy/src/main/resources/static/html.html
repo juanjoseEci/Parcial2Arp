@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sorting Service Client</title>
+    <script>
+        async function callService(operation) {
+            const list = document.getElementById(operation + '-list').value;
+            const value = document.getElementById(operation + '-value').value;
+            const response = await fetch(`http://proxy-instance:8080/${operation}?list=${list}&value=${value}`);
+            const result = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(result, null, 2);
+        }
+    </script>
+</head>
+<body>
+<h1>Sorting Service Client</h1>
+<form onsubmit="event.preventDefault(); callService('linearsearch');">
+    <label for="linearsearch-list">List:</label>
+    <input type="text" id="linearsearch-list" name="list" required>
+    <label for="linearsearch-value">Value:</label>
+    <input type="text" id="linearsearch-value" name="value" required>
+    <button type="submit">Linear Search</button>
+</form>
+<form onsubmit="event.preventDefault(); callService('binarysearch');">
+    <label for="binarysearch-list">List:</label>
+    <input type="text" id="binarysearch-list" name="list" required>
+    <label for="binarysearch-value">Value:</label>
+    <input type="text" id="binarysearch-value" name="value" required>
+    <button type="submit">Binary Search</button>
+</form>
+<pre id="result"></pre>
+</body>
+</html>
